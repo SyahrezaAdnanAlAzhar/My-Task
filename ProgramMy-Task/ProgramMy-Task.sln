@@ -5,11 +5,13 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramMy-Task", "ProgramMy-Task.csproj", "{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationLibrary", "..\AuthenticationLibrary\AuthenticationLibrary.csproj", "{38C928AD-D233-4908-95A3-EDF4D68DB861}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationLibrary", "..\AuthenticationLibrary\AuthenticationLibrary.csproj", "{38C928AD-D233-4908-95A3-EDF4D68DB861}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarAPI", "..\CalendarAPI\CalendarAPI.csproj", "{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarAPI", "..\CalendarAPI\CalendarAPI.csproj", "{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationLibrary", "..\ValidationLibrary\ValidationLibrary.csproj", "{D1509B4A-29E3-4C8B-85C1-FB75661184CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidationLibrary", "..\ValidationLibrary\ValidationLibrary.csproj", "{D1509B4A-29E3-4C8B-85C1-FB75661184CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDTaskLibrary", "..\CRUDTaskLibrary\CRUDTaskLibrary.csproj", "{EAE100C5-BDDA-4920-817E-DC62C9B629F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE100C5-BDDA-4920-817E-DC62C9B629F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE100C5-BDDA-4920-817E-DC62C9B629F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE100C5-BDDA-4920-817E-DC62C9B629F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE100C5-BDDA-4920-817E-DC62C9B629F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
