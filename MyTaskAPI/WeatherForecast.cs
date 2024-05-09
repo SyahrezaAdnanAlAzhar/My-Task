@@ -1,4 +1,4 @@
-namespace CalendarAPI
+namespace MyTaskAPI
 {
     public class WeatherForecast
     {

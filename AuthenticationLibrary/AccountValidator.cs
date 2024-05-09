@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUDTaskLibrary
+namespace AuthenticationLibrary
 {
-    internal class Prioritas
+    internal class AccountValidator
     {
     }
 }

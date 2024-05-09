@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace CalendarAPI.Controllers
+namespace MyTaskAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
