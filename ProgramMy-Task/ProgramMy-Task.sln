@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationLibrary", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarAPI", "..\CalendarAPI\CalendarAPI.csproj", "{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationLibrary", "..\ValidationLibrary\ValidationLibrary.csproj", "{D1509B4A-29E3-4C8B-85C1-FB75661184CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1509B4A-29E3-4C8B-85C1-FB75661184CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
