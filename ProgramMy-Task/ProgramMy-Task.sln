@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramMy-Task", "ProgramMy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationLibrary", "..\AuthenticationLibrary\AuthenticationLibrary.csproj", "{38C928AD-D233-4908-95A3-EDF4D68DB861}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarAPI", "..\CalendarAPI\CalendarAPI.csproj", "{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CD438B-4AC3-4C97-9BC2-271FFEECD177}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
