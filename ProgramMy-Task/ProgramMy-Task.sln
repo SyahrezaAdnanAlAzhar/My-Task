@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramMy-Task", "ProgramMy-Task.csproj", "{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramMy-Task", "ProgramMy-Task.csproj", "{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationLibrary", "..\AuthenticationLibrary\AuthenticationLibrary.csproj", "{38C928AD-D233-4908-95A3-EDF4D68DB861}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D9FF549-CC62-45FE-8ED2-C8F5A394FE32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C928AD-D233-4908-95A3-EDF4D68DB861}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
