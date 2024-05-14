@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using AuthenticationLibrary;
+using CRUDTaskLibrary;
 
 namespace MyTaskAPI.Controllers
 {
@@ -6,12 +8,8 @@ namespace MyTaskAPI.Controllers
     [Route("[controller]")]
     public class MyTaskController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<MyTaskController> _logger;
+        private static readonly List<AuthenticationLibrary.Account> listAccount = new List<AuthenticationLibrary.Account>();
+        private static readonly List<CRUDTaskLibrary.Task> listTask = new List<CRUDTaskLibrary.Task>();
 
         public MyTaskController(ILogger<MyTaskController> logger)
         {
