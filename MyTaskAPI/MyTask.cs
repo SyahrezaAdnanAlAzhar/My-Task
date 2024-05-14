@@ -1,6 +1,6 @@
 namespace MyTaskAPI
 {
-    public class WeatherForecast
+    public class MyTask
     {
         public DateOnly Date { get; set; }
 
