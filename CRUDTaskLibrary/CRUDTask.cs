@@ -18,7 +18,8 @@ namespace CRUDTaskLibrary
             string path = judulTask + "_" + username + ".json";
             if (File.Exists(path))
             {
-                Task dataTask = JsonSerializer.Deserialize<Task>(path);
+                string jsonText = File.ReadAllText(path);
+                Task dataTask = JsonSerializer.Deserialize<Task>(jsonText);
                 return dataTask;
             }
             else
