@@ -64,41 +64,28 @@ namespace CRUDTaskLibrary
         }
         public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
-    //merubah tanggal mulai pada file json
-    //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
-    //Pastikan statenya ikut menyesuaikan
-    string path = judulTask + "_" + username + ".json";
-        if (File.Exists(path))
-        {
-            string jsonText = File.ReadAllText(path);
-            Task dataTask = JsonSerializer.Deserialize<Task>(jsonText);
+         if (judulTask == null || username == null)
+         {
+             throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+         }
 
-        // Update tanggalMulai and validate the task
-            dataTask.tanggalMulai = perubahanTanggalMulai;
+         Task desTask = readTask(judulTask, username);
 
-            TaskValidator validator = new TaskValidator();
-            var result = validator.Validate(dataTask);
+         // Programming Defensive: Memastikan perubahanTanggalMulai adalah objek DateTime yang valid
+         if (!(perubahanTanggalMulai is DateTime))
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus berupa objek DateTime.");
+         }
 
-        if (result.IsValid)
-        {
-            // If the task is valid, save it back to the file
-            jsonText = JsonSerializer.Serialize(dataTask);
-            File.WriteAllText(path, jsonText);
-            Console.WriteLine($"Tanggal mulai tugas dengan judul {judulTask} telah berhasil diperbarui");
-        }
-        else
-        {
-            // If the task is not valid, print the validation errors
-            foreach (var failure in result.Errors)
-            {
-                Console.WriteLine("Property " + failure.PropertyName + " failed validation. Error was: " + failure.ErrorMessage);
-            }
-        }
-        }
-        else
-        {
-        Console.WriteLine("Tugas tidak ditemukan");
-        }
+         if (perubahanTanggalMulai.CompareTo(desTask.tanggalMulai) < 0)
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus lebih dari tanggal mulai");
+         }
+
+         desTask.tanggalMulai = perubahanTanggalMulai;
+
+         createTask(desTask);
+         Console.WriteLine("Tanggal mulai sudah menjadi: " + perubahanTanggalMulai);
         }
         public static void updateTanggalSelesai<T, U, V>(T judulTask, U perubahanTanggalSelesai, V username)
         {
