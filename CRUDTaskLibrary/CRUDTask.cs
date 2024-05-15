@@ -66,6 +66,27 @@ namespace CRUDTaskLibrary
      // Save the data back to the JSON file
          File.WriteAllText("task_data.json", JsonSerializer.Serialize(taskData));
         }
+        public static void updateDeskripsil(String judulAwalTask, String judulPerubahanTask, String username)
+        {
+            var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
+
+    // Cari task dengan judul yang sesuai
+    Task task = taskData.Find(t => t.judul == judulAwalTask);
+
+    // Pastikan task ditemukan
+            if (task == null)
+            {
+                throw new Exception($"Task dengan judul '{judulAwalTask}' tidak ditemukan.");
+            }
+
+    // Perbarui deskripsi task
+            task.deskripsi = judulPerubahanTask;
+
+    // Simpan data yang diperbarui kembali ke file JSON
+            File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
+            Console.WriteLine($"Deskripsi task '{judulAwalTask}' telah diperbarui oleh '{username}'.");
+        }
         public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
     //merubah tanggal mulai pada file json
