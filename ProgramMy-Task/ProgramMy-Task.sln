@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationLibrary", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUDTaskLibrary", "..\CRUDTaskLibrary\CRUDTaskLibrary.csproj", "{EAE100C5-BDDA-4920-817E-DC62C9B629F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTaskAPI", "..\MyTaskAPI\MyTaskAPI.csproj", "{3DBC74DD-FDE0-4F35-9433-4A29343DF89D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTaskAPI", "..\MyTaskAPI\MyTaskAPI.csproj", "{3DBC74DD-FDE0-4F35-9433-4A29343DF89D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDTaskLibraryTests", "..\CRUDTaskLibraryTests\CRUDTaskLibraryTests.csproj", "{83534E76-18D6-4854-B616-DED74DECAA15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3DBC74DD-FDE0-4F35-9433-4A29343DF89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DBC74DD-FDE0-4F35-9433-4A29343DF89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DBC74DD-FDE0-4F35-9433-4A29343DF89D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83534E76-18D6-4854-B616-DED74DECAA15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83534E76-18D6-4854-B616-DED74DECAA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83534E76-18D6-4854-B616-DED74DECAA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83534E76-18D6-4854-B616-DED74DECAA15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
