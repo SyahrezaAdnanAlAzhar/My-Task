@@ -63,11 +63,35 @@ namespace CRUDTaskLibrary
             //merubah deskrispi pada file json
         }
         public static void updateTanggalMulai<T, U, V>(T judulTask, U perubahanTanggalMulai, V username)
-        {
-            //merubah tanggal mulai pada file json
-            //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
-            //Pastikan statenya ikut menyesuaikan
-        }
+ {
+     //merubah tanggal mulai pada file json
+     //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
+     //Pastikan statenya ikut menyesuaikan
+     if (judulTask == null || username == null)
+     {
+         throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+     }
+
+     Task desTask = readTask(judulTask, username);
+
+     // Programming Defensive: Memastikan perubahanTanggalSelesai adalah objek DateTime yang valid
+     if (!(perubahanTanggalMulai is DateTime))
+     {
+         throw new ArgumentException("Tanggal Mulai Baru harus berupa objek DateTime.");
+     }
+
+     if (perubahanTanggalMulai.CompareTo(desTask.tanggalMulai) < 0)
+     {
+         throw new ArgumentException("Tanggal Mulai Baru harus lebih dari tanggal mulai");
+     }
+
+     desTask.tanggalMulai = perubahanTanggalMulai;
+
+     string serTask = Jsonconvert.SerializeObject(desTask, Formatting.Indented);
+
+     createTask<string>(serTask);
+     Console.WriteLine("Tanggal mulai sudah menjadi: " + perubahanTanggalMulai);
+ }
         public static void updateTanggalSelesai<T, U, V>(T judulTask, U perubahanTanggalSelesai, V username)
         {
             //merubah tanggal mulai pada file json
