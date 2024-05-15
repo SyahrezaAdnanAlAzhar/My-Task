@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Text.Json;
 
@@ -74,9 +72,7 @@ namespace CRUDTaskLibrary
 
             desTask.tanggalSelesai = perubahanTanggalSelesai;
 
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
-
-            createTask<string>(serTask);
+            createTask(desTask);
             Console.WriteLine("Tanggal selesai sudah menjadi: " + perubahanTanggalSelesai);
         }
         public static void updateJenisTugas(string judulTask, int perubahanJenisTugas, string username)
@@ -124,9 +120,8 @@ namespace CRUDTaskLibrary
             {
                 desTask.jenisTugas = Task.JenisTugas.ForumDiskusi;
             }
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
 
-            createTask<string>(serTask);
+            createTask(desTask);
             //Bisa pake JArray kalo gabisa buat 1-1
 
             Console.WriteLine("Jenis Tugas Terdupdate menjadi Tipe: " + Task.getKodeJenisTugas(desTask.jenisTugas));
@@ -168,9 +163,7 @@ namespace CRUDTaskLibrary
                 desTask.namaPrioritas = Task.Prioritas.Lowest;
             }
 
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
-
-            createTask<string>(serTask);
+            createTask(desTask);
 
             Console.WriteLine("Tignkat Prioritas Tugas Sekarang Bernilai: " + Task.getUrutanPrioritas(desTask.namaPrioritas));
         }
