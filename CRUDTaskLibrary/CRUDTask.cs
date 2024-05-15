@@ -33,7 +33,7 @@ namespace CRUDTaskLibrary
             //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
             //Pastikan statenya ikut menyesuaikan
         }
-        public static void updateTanggalSelesai<T, V>(T judulTask, DateTime perubahanTanggalSelesai, V username)
+        public static void updateTanggalSelesai(string judulTask, DateTime perubahanTanggalSelesai, string username)
         {
             //merubah tanggal mulai pada file json
             //pastikan perubahan tanggal selesai yaitu pada tanggal setelah tanggal mulai
@@ -65,7 +65,7 @@ namespace CRUDTaskLibrary
             createTask<string>(serTask);
             Console.WriteLine("Tanggal selesai sudah menjadi: " + perubahanTanggalSelesai);
         }
-        public static void updateJenisTugas<T, U, V>(T judulTask, U perubahanJenisTugas, V username)
+        public static void updateJenisTugas(string judulTask, int perubahanJenisTugas, string username)
         {
             //merubah tanggal mulai pada file json
             //pastikan bahwa jenis tugas yang ingin dirubah terdapat di enum
@@ -78,8 +78,7 @@ namespace CRUDTaskLibrary
             }
 
             // Programming Defensive: Memastikan perubahanJenisTugas adalah angka integer antara 1 dan 9
-            dynamic dynamicJenisTugas = perubahanJenisTugas;
-            if (!(dynamicJenisTugas is int) || dynamicJenisTugas < 1 || dynamicJenisTugas > 9)
+            if (!(perubahanJenisTugas is int) || perubahanJenisTugas < 1 || perubahanJenisTugas > 9)
             {
                 throw new ArgumentException("perubahanJenisTugas harus berupa angka antara 1 dan 9.");
             }
@@ -119,7 +118,7 @@ namespace CRUDTaskLibrary
             Console.WriteLine("Jenis Tugas Terdupdate menjadi Tipe: " + Task.getKodeJenisTugas(desTask.jenisTugas));
          
         }
-        public static void updatePrioritas<T, U, V>(T judulTask, U perubahanPrioritas, V username)
+        public static void updatePrioritas(string judulTask, int perubahanPrioritas, string username)
         {
             //merubah tanggal mulai pada file json
             //pastikan bahwa tingkat prioritas yang ingin dirubah terdapat di enum
@@ -132,8 +131,7 @@ namespace CRUDTaskLibrary
             }
 
             // Programming Defensive: Memastikan perubahanPrioritas adalah angka integer antara 1 dan 5
-            dynamic dynamicPrioritas = perubahanPrioritas;
-            if (!(dynamicPrioritas is int) || dynamicPrioritas < 1 || dynamicPrioritas > 5)
+            if (!(perubahanPrioritas is int) || perubahanPrioritas < 1 || perubahanPrioritas > 5)
             {
                 throw new ArgumentException("perubahanPrioritas harus berupa angka antara 1 dan 5.");
             }
