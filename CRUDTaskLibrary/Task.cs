@@ -32,5 +32,22 @@ namespace CRUDTaskLibrary
         public JenisTugas jenisTugas { get; set; }
         public Prioritas namaPrioritas { get; set; }
         public TaskState taskState { get; set; }
+
+        public Task()
+        {
+
+        }
+
+        public Task(string judul, string username, string deskripsi, string tanggalMulai, string tanggalSelesai, string jenisTugas, string namaPrioritas, string taskState)
+        {
+            this.judul = judul;
+            this.username = username;
+            this.deskripsi = deskripsi;
+            this.tanggalMulai = DateTime.Parse(tanggalMulai);
+            this.tanggalSelesai = DateTime.Parse(tanggalSelesai);
+            this.jenisTugas = (JenisTugas)Enum.Parse(typeof(JenisTugas), jenisTugas);
+            this.namaPrioritas = (Prioritas)Enum.Parse(typeof(Prioritas), namaPrioritas);
+            this.taskState = (TaskState)Enum.Parse(typeof(TaskState), taskState);
+        }
     }
 }
