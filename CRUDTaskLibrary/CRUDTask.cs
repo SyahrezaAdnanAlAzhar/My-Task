@@ -1,19 +1,33 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
 using System.Text.Json;
 
 namespace CRUDTaskLibrary
 {
     public static class CRUDTask
     {
-        public static void createTask<T>(T taskInput)
+        public static void createTask(Task taskInput)
         {
-            //Membuat file json
+            string jsonText = JsonSerializer.Serialize(taskInput);
+            string path = taskInput.judul + "_" + taskInput.username + ".json";
+            File.WriteAllText(path, jsonText);
+            Console.WriteLine($"Tugas dengan judul {taskInput.judul} telah berhasil ditambahkan");
+
         }
-        public static Task readTask<T, U>(T judulTask, U username)
+        public static Task readTask(string judulTask, string username)
         {
-            //mencari file json berdasarkan judul task, dan username yang sama
-            return null;
+            string path = judulTask + "_" + username + ".json";
+            if (File.Exists(path))
+            {
+                string jsonText = File.ReadAllText(path);
+                Task dataTask = JsonSerializer.Deserialize<Task>(jsonText);
+                return dataTask;
+            }
+            else
+            {
+                return null;
+            }
         }
         public static void deleteTask<T, U>(T judulTask, U username)
         {
