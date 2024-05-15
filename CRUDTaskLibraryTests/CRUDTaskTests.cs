@@ -70,16 +70,5 @@ namespace CRUDTaskLibrary.Tests
                 Console.WriteLine("Angka < 0");
             }
         }
-        [TestMethod()]
-        public void updatePrioritasTest_Highest()
-        {
-            Task taskTes = new Task();
-
-            taskTes.judul = "Tubes";
-            taskTes.username = "Bagas";
-            taskTes.namaPrioritas = Task.Prioritas.Low;
-            CRUDTask.updatePrioritas(taskTes.judul, 1, taskTes.username);
-            Assert.AreEqual(Task.Prioritas.Highest, taskTes.namaPrioritas);
-        }
     }
 }

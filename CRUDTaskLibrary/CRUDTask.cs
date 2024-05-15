@@ -59,10 +59,15 @@ namespace CRUDTaskLibrary
 
             Task desTask = readTask(judulTask, username);
 
-            /*TaskValidator validator = new TaskValidator();
-            ValidationResult validationResult = validator.Validate(desTask);*/
-
             desTask.deskripsi = deskripsiBaru;
+
+           /* TaskValidator validator = new TaskValidator();
+            ValidationResult validationResult = validator.Validate(desTask);
+
+            if (!validationResult.IsValid)
+            {
+                throw new Exception("Invalid task data");
+            }*/
 
             createTask(desTask);
 
