@@ -36,56 +36,31 @@ namespace CRUDTaskLibrary
         }
         public static void updateJudul(String judulAwalTask, String judulPerubahanTask, String username)
         {
-     // Load data from a JSON file
-         var taskData = JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
+             var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
 
-     // Find the task with the matching title
-        Task task = taskData.Find(t =>
-         {
-         return task.judul == judulAwalTask;
-         });
+             // Find the task with the matching title
+             var task = taskData.Find(t => t.judul == judulAwalTask);
 
-     // Ensure the task is found
-         if (task == null)
-         {
-         throw new Exception($"Task with title '{judulAwalTask}' not found.");
-         }
-
-     // Update the task title
-         task.judul = judulPerubahanTask;
-
-     // Record the change
-         var x = new
-         {
-         Username = username.ToString(),
-         Message = $"Task title '{task.judul}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
-         };
-
-         taskData.Add(judulPerubahanTask);
-
-     // Save the data back to the JSON file
-         File.WriteAllText("task_data.json", JsonSerializer.Serialize(taskData));
-        }
-        public static void updateDeskripsil(String judulAwalTask, String judulPerubahanTask, String username)
-        {
-            var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
-
-    // Cari task dengan judul yang sesuai
-    Task task = taskData.Find(t => t.judul == judulAwalTask);
-
-    // Pastikan task ditemukan
-            if (task == null)
+             // Ensure the task is found
+             if (task == null)
             {
-                throw new Exception($"Task dengan judul '{judulAwalTask}' tidak ditemukan.");
-            }
+                 throw new Exception($"Task with title '{judulAwalTask}' not found.");
+             }
 
-    // Perbarui deskripsi task
-            task.deskripsi = judulPerubahanTask;
+             // Update the task title
+             task.judul = judulPerubahanTask;
 
-    // Simpan data yang diperbarui kembali ke file JSON
-            File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+             // Record the change
+             var changeLog = new ChangeLog
+            {
+                 Username = username.ToString(),
+                 Message = $"Task title '{task.judul}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
+             };
 
-            Console.WriteLine($"Deskripsi task '{judulAwalTask}' telah diperbarui oleh '{username}'.");
+             taskData.Add(changeLog);
+
+             // Save the data back to the JSON file
+             File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData));
         }
         public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
