@@ -131,7 +131,7 @@ namespace CRUDTaskLibrary
             }
 
             // Programming Defensive: Memastikan perubahanPrioritas adalah angka integer antara 1 dan 5
-            if (!(perubahanPrioritas is int) || perubahanPrioritas < 1 || perubahanPrioritas > 5)
+            if (perubahanPrioritas < 1 || perubahanPrioritas > 5)
             {
                 throw new ArgumentException("perubahanPrioritas harus berupa angka antara 1 dan 5.");
             }
