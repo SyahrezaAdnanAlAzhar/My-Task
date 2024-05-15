@@ -33,6 +33,11 @@ namespace CRUDTaskLibrary
         public Prioritas namaPrioritas { get; set; }
         public TaskState taskState { get; set; }
 
+        public Task()
+        {
+
+        }
+
         public Task(string judul, string username, string deskripsi, string tanggalMulai, string tanggalSelesai, string jenisTugas, string namaPrioritas, string taskState)
         {
             this.judul = judul;
