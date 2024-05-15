@@ -11,15 +11,32 @@ namespace CRUDTaskLibrary
     {
         public TaskValidator()
         {
-            RuleFor(x => x.judul).NotEmpty().WithMessage("Judul is required.").WithErrorCode("JudulIsNull");
-            RuleFor(x => x.username).NotEmpty().WithMessage("Username is required.");
-            RuleFor(x => x.deskripsi).NotEmpty().WithMessage("Deskripsi is required.");
-            RuleFor(x => x.tanggalMulai).NotEmpty().WithMessage("Tanggal Mulai is required.");
-            RuleFor(x => x.tanggalSelesai).NotEmpty().WithMessage("Tanggal Selesai is required.");
-            RuleFor(x => x.tanggalSelesai).GreaterThan(x => x.tanggalMulai).WithMessage("Tanggal Selesai harus lebih dari Tanggal Mulai.");
-            RuleFor(x => x.jenisTugas).IsInEnum().WithMessage("Invalid Kode Jenis Tugas.");
-            RuleFor(x => x.namaPrioritas).IsInEnum().WithMessage("Invalid Urutan Prioritas.");
-            
+            RuleSet("Judul", () =>
+            {
+                RuleFor(x => x.judul).NotEmpty().WithMessage("Judul is required.");
+            });
+
+            RuleSet("Deskripsi", () =>
+            {
+                RuleFor(x => x.deskripsi).NotEmpty().WithMessage("Deskripsi is required.");
+            });
+
+            RuleSet("Tanggal", () =>
+            {
+                RuleFor(x => x.tanggalMulai).NotEmpty().WithMessage("Tanggal Mulai is required.");
+                RuleFor(x => x.tanggalSelesai).NotEmpty().WithMessage("Tanggal Selesai is required.");
+                RuleFor(x => x.tanggalSelesai).GreaterThan(x => x.tanggalMulai).WithMessage("Tanggal Selesai harus lebih dari Tanggal Mulai.");
+            });
+
+            RuleSet("JenisTugas", () =>
+            {
+                RuleFor(x => x.jenisTugas).IsInEnum().WithMessage("Invalid Kode Jenis Tugas.");
+            });
+
+            RuleSet("Prioritas", () =>
+            {
+                RuleFor(x => x.namaPrioritas).IsInEnum().WithMessage("Invalid Urutan Prioritas.");
+            });
         }
     }
 }
