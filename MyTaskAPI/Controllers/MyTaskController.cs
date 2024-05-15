@@ -68,7 +68,7 @@ namespace MyTaskController.Controllers
         }
 
         [HttpPut(Name = "Update Account Name")]
-        public IActionResult Update(string username, string newName)
+        public IActionResult UpdateUsername(string username, string newName)
         {
             foreach (var account in listAccount)
             {
@@ -82,7 +82,7 @@ namespace MyTaskController.Controllers
         }
 
         [HttpPut(Name = "Update Account Password")]
-        public IActionResult Update(string username, string newPassword)
+        public IActionResult UpdatPassworde(string username, string newPassword)
         {
             foreach (var account in listAccount)
             {
@@ -94,6 +94,8 @@ namespace MyTaskController.Controllers
             }
             return NotFound();
         }
+<<<<<<< HEAD
+=======
 
 
         // GET: api/API
@@ -160,5 +162,6 @@ namespace MyTaskController.Controllers
 
             return NoContent();
         }
+>>>>>>> 348455e1d7973dd734f626633ab2cde04739e484
     }
 }

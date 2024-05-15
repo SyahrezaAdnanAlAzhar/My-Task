@@ -13,6 +13,5 @@ namespace AuthenticationLibrary
         public AccountState prevState;
         public AccountState nextState;
         public AccountState currentState;
-
     }
 }

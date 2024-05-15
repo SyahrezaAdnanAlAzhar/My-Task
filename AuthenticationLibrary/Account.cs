@@ -12,6 +12,6 @@ namespace AuthenticationLibrary
         public string nama { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-
+        public AccountState state { get; set; }
     }
 }

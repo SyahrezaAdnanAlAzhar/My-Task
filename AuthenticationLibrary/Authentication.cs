@@ -2,21 +2,76 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace AuthenticationLibrary
 {
-    public class Authentication
+    public static class Authentication
     {
-        private string _path;
+        //private string _path;
 
-        public Authentication(string path)
+        //public static Account FindAccount(string userName)
+        //{
+        //    string filePath = $"{userName}.json";
+        //    if (File.Exists(filePath))
+        //    {
+        //        try
+        //        {
+        //            string jsonString = File.ReadAllText(filePath);
+        //            Account account = JsonSerializer.Deserialize<Account>(jsonString);
+        //            return account;
+        //        }
+        //        catch (JsonException e)
+        //        {
+        //            Console.WriteLine($"Error deserializing JSON: {e.Message}");
+        //            return null;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"{userName} not found.");
+        //        return null;
+        //    }
+        //}
+        
+        private static bool usernameSudahAda(string username, string path)
+        {
+            try
+            {
+                string jsonData = File.ReadAllText(path);
+                Account akun = JsonSerializer.Deserialize<Account>(jsonData);
+                if (akun != null && akun.email == username)
+                {
+                    //username sudah ada
+                    return true;
+                }
+                else
+                {
+                    //username belum ada
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        
+
+        public static Authentication(string path)
         {
             _path = path;
         }
 
-        public void signUpAccount(Account akun)
+        public static void signUpAccount(string userName, string nama, string email, string password)
         {
+            Account account = new Account();
+            account.userName = userName;
+            account.nama = nama;
+            account.email = email;
+            account.password = password;
+            account.state = AccountState.SignedOut;
+
             if (!IsUsernameUnique(akun.userName))
             {
                 throw new Exception("Username sudah digunakan.");
@@ -27,13 +82,13 @@ namespace AuthenticationLibrary
             SaveAccounts(accounts);
         }
 
-        public Account signInAccount(string username, string password)
+        public static Account signInAccount(string username, string password)
         {
             var account = GetAllAccounts().FirstOrDefault(a => a.userName == username && a.password == password);
             return account;
         }
 
-        public Account signOutAccount(string username, string password)
+        public static Account signOutAccount(string username, string password)
         {
             // Implementasi signOutAccount sesuai kebutuhan aplikasi
             return null;
@@ -51,13 +106,13 @@ namespace AuthenticationLibrary
             return accounts ?? new List<Account>();
         }
 
-        private void SaveAccounts(List<Account> accounts)
+        private static void SaveAccounts(List<Account> accounts)
         {
             var json = JsonConvert.SerializeObject(accounts);
             File.WriteAllText(_path, json);
         }
 
-        private bool IsUsernameUnique(string username)
+        private static bool IsUsernameUnique(string username)
         {
             var accounts = GetAllAccounts();
             return !accounts.Any(a => a.userName == username);
