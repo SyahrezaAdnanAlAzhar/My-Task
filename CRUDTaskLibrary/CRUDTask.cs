@@ -33,7 +33,30 @@ namespace CRUDTaskLibrary
         }
         public static void updateJudul<T, U, V>(T judulAwalTask, U judulPerubahanTask, V username)
         {
-            //merubah judul pada file json
+            var taskData = JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
+
+            Task task = taskData.Find(t =>
+            {
+                return t.Title == judulAwalTask;
+            });
+
+            if (task == null)
+            {
+                throw new Exception($"Task with title '{judulAwalTask}' not found.");
+            }
+
+            task.Title = judulPerubahanTask;
+
+            // Record the change
+            var changeLog = new ChangeLog
+            {
+                Username = username.ToString(),
+                Message = $"Task title '{task.Title}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
+            };
+
+            taskData.Add(changeLog);
+            File.WriteAllText("task_data.json", JsonSerializer.Serialize(taskData));
+        }
         }
         public static void updateDeskripsi<T, U, V>(T judulTask, U perubahanDeskripsi, V username)
         {
