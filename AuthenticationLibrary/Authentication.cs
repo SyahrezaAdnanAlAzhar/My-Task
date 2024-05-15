@@ -63,4 +63,6 @@ namespace AuthenticationLibrary
             return !accounts.Any(a => a.userName == username);
         }
     }
+    String Authentication = "Users/ahmadfadliakbar/Projects/My-Task/AuthenticationLibrary/Authentication.json";
+    Authentication auth = new Authentication(Authentication.json);
 }
