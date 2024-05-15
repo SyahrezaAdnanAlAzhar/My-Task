@@ -2,11 +2,27 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text.Json;
 using FluentValidation;
+using FluentValidation.Results;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace CRUDTaskLibrary
 {
     public static class CRUDTask
     {
+        public static Task getTaskInput(TaskValidator validator)
+        {
+            Task inputTask = new Task();
+            ValidationResult validationResult;
+
+            Console.WriteLine("Masukkan data tugas");
+            Console.Write("Judul: ");
+            inputTask.judul = Console.ReadLine();
+            do
+            {
+
+            } while (!validationResult.IsValid);
+            return null;
+        }
         public static void createTask(Task taskInput)
         {
             string jsonText = JsonSerializer.Serialize(taskInput);

@@ -44,12 +44,11 @@ namespace ProgramMy_Task
                 {
                     case 1:
                         Console.WriteLine("Silahkan masukkan data data yang diperlukan");
-                        inputAccount = getInputAccountData();
+                        inputAccount = getInputAccountData(accountValidator);
                         ValidationResult validationResult = accountValidator.Validate(inputAccount);
                         if (validationResult.IsValid)
                         {
-                            // Lakukan sesuatu jika validasi berhasil
-                            // Misalnya, simpan akun atau lanjutkan dengan proses pembuatan akun
+                            
                         }
                         else
                         {
