@@ -53,6 +53,49 @@ namespace MyTaskController.Controllers
             });
         }
 
+        [HttpPost(Name = "Create/Add Account")]
+        public IActionResult Create(AuthenticationLibrary.Account account)
+        {
+            listAccount.Add(account);
+            return Ok();
+        }
+
+        [HttpPost(Name = "Create/Add Task")]
+        public IActionResult Create(CRUDTaskLibrary.Task task)
+        {
+            listTask.Add(task);
+            return Ok();
+        }
+
+        [HttpPut(Name = "Update Account Name")]
+        public IActionResult Update(string username, string newName)
+        {
+            foreach (var account in listAccount)
+            {
+                if (account.userName == username)
+                {
+                    account.nama = newName;
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPut(Name = "Update Account Password")]
+        public IActionResult Update(string username, string newPassword)
+        {
+            foreach (var account in listAccount)
+            {
+                if (account.userName == username)
+                {
+                    account.password = newPassword;
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
+
+
         // GET: api/API
         [HttpGet]
         public ActionResult<IEnumerable<CRUDTaskLibrary.Task>> GetTasks()
