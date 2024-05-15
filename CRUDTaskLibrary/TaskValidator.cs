@@ -11,7 +11,7 @@ namespace CRUDTaskLibrary
     {
         public TaskValidator()
         {
-            RuleFor(x => x.judul).NotEmpty().WithMessage("Judul is required.");
+            RuleFor(x => x.judul).NotEmpty().WithMessage("Judul is required.").WithErrorCode("JudulIsNull");
             RuleFor(x => x.username).NotEmpty().WithMessage("Username is required.");
             RuleFor(x => x.deskripsi).NotEmpty().WithMessage("Deskripsi is required.");
             RuleFor(x => x.tanggalMulai).NotEmpty().WithMessage("Tanggal Mulai is required.");
