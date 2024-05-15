@@ -26,7 +26,7 @@ namespace MyTaskAPI.Controllers
         }
 
         [HttpPut(Name = "Update Account Name")]
-        public IActionResult Update(string username, string newName)
+        public IActionResult UpdateUsername(string username, string newName)
         {
             foreach (var account in listAccount)
             {
@@ -40,7 +40,7 @@ namespace MyTaskAPI.Controllers
         }
 
         [HttpPut(Name = "Update Account Password")]
-        public IActionResult Update(string username, string newPassword)
+        public IActionResult UpdatPassworde(string username, string newPassword)
         {
             foreach (var account in listAccount)
             {
@@ -51,25 +51,6 @@ namespace MyTaskAPI.Controllers
                 }
             }
             return NotFound();
-        }
-
-        private readonly ILogger<MyTaskController> _logger;
-
-        public MyTaskController(ILogger<MyTaskController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<MyTask> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new MyTask
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
         }
     }
 }
