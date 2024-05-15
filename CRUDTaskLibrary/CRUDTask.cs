@@ -1,5 +1,8 @@
 using System.IO;
 using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using FluentValidation;
 
 namespace CRUDTaskLibrary
 {
@@ -31,19 +34,58 @@ namespace CRUDTaskLibrary
         {
             //delete file json
         }
-        public static void updateJudul<T, U, V>(T judulAwalTask, U judulPerubahanTask, V username)
+        public static void updateJudul(String judulAwalTask, String judulPerubahanTask, String username)
         {
-            //merubah judul pada file json
+             var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
+
+             // Find the task with the matching title
+             var task = taskData.Find(t => t.judul == judulAwalTask);
+
+             // Ensure the task is found
+             if (task == null)
+            {
+                 throw new Exception($"Task with title '{judulAwalTask}' not found.");
+             }
+
+             // Update the task title
+             task.judul = judulPerubahanTask;
+
+             // Record the change
+             var changeLog = new ChangeLog
+            {
+                 Username = username.ToString(),
+                 Message = $"Task title '{task.judul}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
+             };
+
+             taskData.Add(changeLog);
+
+             // Save the data back to the JSON file
+             File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData));
         }
-        public static void updateDeskripsi<T, U, V>(T judulTask, U perubahanDeskripsi, V username)
+        public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
-            //merubah deskrispi pada file json
-        }
-        public static void updateTanggalMulai<T, U, V>(T judulTask, U perubahanTanggalMulai, V username)
-        {
-            //merubah tanggal mulai pada file json
-            //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
-            //Pastikan statenya ikut menyesuaikan
+         if (judulTask == null || username == null)
+         {
+             throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+         }
+
+         Task desTask = readTask(judulTask, username);
+
+         // Programming Defensive: Memastikan perubahanTanggalMulai adalah objek DateTime yang valid
+         if (!(perubahanTanggalMulai is DateTime))
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus berupa objek DateTime.");
+         }
+
+         if (perubahanTanggalMulai.CompareTo(desTask.tanggalMulai) < 0)
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus lebih dari tanggal mulai");
+         }
+
+         desTask.tanggalMulai = perubahanTanggalMulai;
+
+         createTask(desTask);
+         Console.WriteLine("Tanggal mulai sudah menjadi: " + perubahanTanggalMulai);
         }
         public static void updateTanggalSelesai(string judulTask, DateTime perubahanTanggalSelesai, string username)
         {
