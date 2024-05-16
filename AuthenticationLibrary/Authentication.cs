@@ -10,7 +10,33 @@ namespace AuthenticationLibrary
 {
     public static class Authentication
     {
+
         private string _path;
+        String Authentication = "Users/ahmadfadliakbar/Projects/My-Task/AuthenticationLibrary/Authentication.json";
+        Authentication auth = new Authentication(Authentication.json);
+        
+        private static bool usernameSudahAda(string username, string path)
+        {
+            try
+            {
+                string jsonData = File.ReadAllText(path);
+                Account akun = JsonSerializer.Deserialize<Account>(jsonData);
+                if (akun != null && akun.email == username)
+                {
+                    //username sudah ada
+                    return true;
+                }
+                else
+                {
+                    //username belum ada
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         //public static Account FindAccount(string userName)
         //{
@@ -35,29 +61,6 @@ namespace AuthenticationLibrary
         //        return null;
         //    }
         //}
-
-        private static bool usernameSudahAda(string username, string path)
-        {
-            try
-            {
-                string jsonData = File.ReadAllText(path);
-                Account akun = Newtonsoft.Json.JsonSerializer.Deserialize<Account>(jsonData);
-                if (akun != null && akun.email == username)
-                {
-                    //username sudah ada
-                    return true;
-                }
-                else
-                {
-                    //username belum ada
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
 
         public static Account getInputAccountData(AccountValidator validator)
         {
