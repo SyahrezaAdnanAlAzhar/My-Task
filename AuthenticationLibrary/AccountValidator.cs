@@ -42,6 +42,11 @@ namespace AuthenticationLibrary
             });
         }
 
+        public ValidationResult Validate(Account newAccount, string ruleSet)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool BeEndsWithDigit(string username)
         {
             if (string.IsNullOrEmpty(username))
