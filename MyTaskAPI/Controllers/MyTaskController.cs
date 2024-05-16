@@ -67,20 +67,6 @@ namespace MyTaskController.Controllers
             return Ok();
         }
 
-        [HttpPost(Name = "Create/Add Account")]
-        public IActionResult Create(AuthenticationLibrary.Account account)
-        {
-            listAccount.Add(account);
-            return Ok();
-        }
-
-        [HttpPost(Name = "Create/Add Task")]
-        public IActionResult Create(CRUDTaskLibrary.Task task)
-        {
-            listTask.Add(task);
-            return Ok();
-        }
-
         [HttpPut(Name = "Update Account Name")]
         public IActionResult UpdateUsername(string username, string newName)
         {

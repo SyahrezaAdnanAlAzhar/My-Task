@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 
 namespace AuthenticationLibrary
 {
@@ -16,6 +17,11 @@ namespace AuthenticationLibrary
             RuleFor(account => account.password).NotEmpty().WithMessage("Password harus diisi").MinimumLength(8).WithMessage("Password minimal 8 karakter")
                 .Matches("[A-Z]").WithMessage("Password harus memiliki minimal 1 huruf kapital")
                 .Matches("[0-9]").WithMessage("Password harus memiliki minimal 1 angka");
+        }
+
+        public ValidationResult Validate(Account newAccount, string ruleSet)
+        {
+            throw new NotImplementedException();
         }
 
         private bool BeEndsWithDigit(string username)

@@ -44,7 +44,7 @@ namespace ProgramMy_Task
                 {
                     case 1:
                         Console.WriteLine("Silahkan masukkan data data yang diperlukan");
-                        inputAccount = getInputAccountData();
+                        inputAccount = Authentication.getInputAccountData(accountValidator);
                         ValidationResult validationResult = accountValidator.Validate(inputAccount);
                         if (validationResult.IsValid)
                         {
@@ -94,109 +94,6 @@ namespace ProgramMy_Task
             }
         }
 
-        private Account getInputAccountData(AccountValidator validator)
-        {
-            Account newAccount = new Account();
-            ValidationResult validationResult;
-
-            // Looping hingga semua atribut valid
-            do
-            {
-                // Input username
-                do
-                {
-                    Console.Write("Username: ");
-                    newAccount.userName = Console.ReadLine();
-                    validationResult = validator.Validate(newAccount, ruleSet: "Username");
-
-                    if (!validationResult.IsValid)
-                    {
-                        // Tampilkan pesan kesalahan jika validasi gagal
-                        foreach (var error in validationResult.Errors)
-                        {
-                            Console.WriteLine(error.ErrorMessage);
-                        }
-                    }
-
-                } while (!validationResult.IsValid);
-
-                // Input nama
-                do
-                {
-                    Console.Write("Nama: ");
-                    newAccount.nama = Console.ReadLine();
-                    validationResult = validator.Validate(newAccount, ruleSet: "Nama");
-
-                    if (!validationResult.IsValid)
-                    {
-                        // Tampilkan pesan kesalahan jika validasi gagal
-                        foreach (var error in validationResult.Errors)
-                        {
-                            Console.WriteLine(error.ErrorMessage);
-                        }
-                    }
-
-                } while (!validationResult.IsValid);
-
-                // Input email
-                do
-                {
-                    Console.Write("Email: ");
-                    newAccount.email = Console.ReadLine();
-                    validationResult = validator.Validate(newAccount, ruleSet: "Email");
-
-                    if (!validationResult.IsValid)
-                    {
-                        // Tampilkan pesan kesalahan jika validasi gagal
-                        foreach (var error in validationResult.Errors)
-                        {
-                            Console.WriteLine(error.ErrorMessage);
-                        }
-                    }
-
-                } while (!validationResult.IsValid);
-
-                // Input password
-                do
-                {
-                    Console.Write("Password: ");
-                    newAccount.password = Console.ReadLine();
-                    validationResult = validator.Validate(newAccount, ruleSet: "Password");
-
-                    if (!validationResult.IsValid)
-                    {
-                        // Tampilkan pesan kesalahan jika validasi gagal
-                        foreach (var error in validationResult.Errors)
-                        {
-                            Console.WriteLine(error.ErrorMessage);
-                        }
-                    }
-
-                } while (!validationResult.IsValid);
-
-            } while (!validationResult.IsValid);
-
-            return newAccount;
-        }
-
-        private Account getInputAccountData()
-        {
-            Account newAccount = new Account();
-            Console.Write("Username: ");
-            newAccount.userName = Console.ReadLine();
-            while (!Authentication.FindAccount(newAccount.userName).Equals(null))
-            {
-                Console.WriteLine("Username sudah digunakan, buat username yang unik!");
-                Console.Write("Username: ");
-                newAccount.userName = Console.ReadLine();
-            }
-            Console.Write("Nama: ");
-            newAccount.nama = Console.ReadLine();
-            Console.Write("Email: ");
-            newAccount.email = Console.ReadLine();
-            Console.Write("Password: ");
-            newAccount.password = Console.ReadLine();
-            return newAccount;
-        }
+        
     }
 }
