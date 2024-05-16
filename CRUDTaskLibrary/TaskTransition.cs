@@ -28,5 +28,18 @@ namespace CRUDTaskLibrary
             new TaskTransition(TaskState.PostPone, TaskState.InProgress, TriggerTaskState.Mengerjakan),
             new TaskTransition(TaskState.InProgress, TaskState.Done, TriggerTaskState.Menyelesaikan)
         };
+
+        public TaskState getNextState(TaskState prevState, TriggerTaskState trigger)
+        {
+            TaskState nextState = prevState;
+            for (int i = 0; i < transitions.Length; i++)
+            {
+                if (transitions[i].prevState == prevState && transitions[i].triggerTaskState == trigger)
+                {
+                    nextState = transitions[i].nextState;
+                }
+            }
+            return nextState;
+        }
     }
 }

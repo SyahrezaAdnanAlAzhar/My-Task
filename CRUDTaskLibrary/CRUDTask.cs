@@ -1,11 +1,28 @@
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text.Json;
 using FluentValidation;
+using FluentValidation.Results;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace CRUDTaskLibrary
 {
     public static class CRUDTask
     {
+        public static Task getTaskInput(TaskValidator validator)
+        {
+            Task inputTask = new Task();
+            ValidationResult validationResult;
+
+            Console.WriteLine("Masukkan data tugas");
+            Console.Write("Judul: ");
+            inputTask.judul = Console.ReadLine();
+            do
+            {
+
+            } while (!validationResult.IsValid);
+            return null;
+        }
         public static void createTask(Task taskInput)
         {
             string jsonText = JsonSerializer.Serialize(taskInput);
@@ -29,37 +46,48 @@ namespace CRUDTaskLibrary
                 //test
             }
         }
-        public static void deleteTask<T, U>(T judulTask, U username)
+        public static void deleteTask(string judulTask, string username)
         {
             //delete file json
         }
         public static void updateJudul(String judulAwalTask, String judulPerubahanTask, String username)
         {
-             var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
-
-             // Find the task with the matching title
-             var task = taskData.Find(t => t.judul == judulAwalTask);
-
-             // Ensure the task is found
-             if (task == null)
+            // Ensure the task is found
+            if (judulAwalTask == null || username == null)
             {
-                 throw new Exception($"Task with title '{judulAwalTask}' not found.");
+                 throw new Exception($"Task with title '{judulAwalTask}' and '{username}' not found.");
              }
 
-             // Update the task title
-             task.judul = judulPerubahanTask;
+            Task taskData = readTask(judulAwalTask, username);
+            // Update the task title
+            taskData.judul = judulPerubahanTask;
+            
+            createTask(taskData);
 
-             // Record the change
-             var changeLog = new ChangeLog
+            Console.WriteLine("Judul Berhasil Diperbarui");
+        }
+        public static void updateDeskripsi(string judulTask, string deskripsiBaru, string username)
+        {
+            if (judulTask == null || username == null)
             {
-                 Username = username.ToString(),
-                 Message = $"Task title '{task.judul}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
-             };
+                throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+            }
 
-             taskData.Add(changeLog);
+            Task desTask = readTask(judulTask, username);
 
-             // Save the data back to the JSON file
-             File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData));
+            desTask.deskripsi = deskripsiBaru;
+
+           /* TaskValidator validator = new TaskValidator();
+            ValidationResult validationResult = validator.Validate(desTask);
+
+            if (!validationResult.IsValid)
+            {
+                throw new Exception("Invalid task data");
+            }*/
+
+            createTask(desTask);
+
+            Console.WriteLine("Deskripsi Berhasil Diperbarui");
         }
         public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
