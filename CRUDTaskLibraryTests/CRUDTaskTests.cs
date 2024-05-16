@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CRUDTaskLibrary;
 using System;
 using System.Collections.Generic;
@@ -68,6 +68,45 @@ namespace CRUDTaskLibrary.Tests
             catch (Exception ex)
             {
                 Console.WriteLine("Angka < 0");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJenisTugasTest_judul()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas(null, 3, "Reza");
+            }
+            catch
+            {
+                Console.WriteLine("Judul tidak boleh null");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJenisTugasTest_username()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas("KPL", 2, null);
+            }
+            catch
+            {
+                Console.WriteLine("Username tidak boleh null");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJenisTugasTest_jenisTugas()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas("KPL", 20, "Reza");
+            }
+            catch
+            {
+                Console.WriteLine("No urut jenis tugas harus kurang dari 10");
             }
         }
 
