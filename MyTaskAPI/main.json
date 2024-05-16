@@ -1,0 +1,32 @@
+[
+  {
+    "judul": "Tugas KPL",
+    "username": "Agung",
+    "deskripsi": "Tubes",
+    "tanggalMulai": "2024-01-01",
+    "tanggalSelesai": "2024-01-31",
+    "jenisTugas": "Project",
+    "namaPrioritas": "Highest",
+    "taskState": "Done"
+  },
+  {
+    "judul": "Tugas PBO",
+    "username": "Bambang",
+    "deskripsi": "Tubes lagi",
+    "tanggalMulai": "2024-02-01",
+    "tanggalSelesai": "2024-02-28",
+    "jenisTugas": "Laporan",
+    "namaPrioritas": "Low",
+    "taskState": "InProgress"
+  },
+  {
+    "judul": "Tugas UX",
+    "username": "Budi",
+    "deskripsi": "Observasi user",
+    "tanggalMulai": "2024-03-01",
+    "tanggalSelesai": "2024-03-31",
+    "jenisTugas": "Observasi",
+    "namaPrioritas": "Medium",
+    "taskState": "PostPone"
+  }
+]

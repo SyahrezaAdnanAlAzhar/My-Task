@@ -48,8 +48,7 @@ namespace ProgramMy_Task
                         ValidationResult validationResult = accountValidator.Validate(inputAccount);
                         if (validationResult.IsValid)
                         {
-                            // Lakukan sesuatu jika validasi berhasil
-                            // Misalnya, simpan akun atau lanjutkan dengan proses pembuatan akun
+                            
                         }
                         else
                         {

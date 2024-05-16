@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using AuthenticationLibrary;
 using CRUDTaskLibrary;
 using System.Threading.Tasks;
-using Task = CRUDTaskLibrary.Task;
+using System.IO;
+using Newtonsoft.Json;
+using System.Linq;
+using System;
+using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace MyTaskController.Controllers
@@ -14,59 +19,61 @@ namespace MyTaskController.Controllers
     {
         private static readonly List<AuthenticationLibrary.Account> listAccount = new List<AuthenticationLibrary.Account>();
         private static readonly List<CRUDTaskLibrary.Task> listTask = new List<CRUDTaskLibrary.Task>();
-
-        static APIController()
+        
+        [HttpGet]
+        public ActionResult<IEnumerable<CRUDTaskLibrary.Task>> GetTasks()
         {
-            listTask.Add(new CRUDTaskLibrary.Task
+            var tasksFix = new List<object>();
+            try
             {
-                judul = "Task1",
-                username = "User1",
-                deskripsi = "This is task 1",
-                tanggalMulai = DateTime.Now,
-                tanggalSelesai = DateTime.Now.AddDays(2),
-                jenisTugas = CRUDTaskLibrary.Task.JenisTugas.Video,
-                namaPrioritas = CRUDTaskLibrary.Task.Prioritas.Highest,
-                taskState = TaskState.InProgress
-            });
-            listTask.Add(new CRUDTaskLibrary.Task
-            {
-                judul = "Task 2",
-                username = "User2",
-                deskripsi = "This is task 2",
-                tanggalMulai = DateTime.Now,
-                tanggalSelesai = DateTime.Now.AddDays(3),
-                jenisTugas = CRUDTaskLibrary.Task.JenisTugas.Laporan,
-                namaPrioritas = CRUDTaskLibrary.Task.Prioritas.Medium,
-                taskState = TaskState.PostPone
-            });
+                string content = System.IO.File.ReadAllText("main.json");
+                var tasks = JsonConvert.DeserializeObject<List<CRUDTaskLibrary.Task>>(content);
 
-            listTask.Add(new CRUDTaskLibrary.Task
+                if (tasks == null)
+                {
+                    return NotFound("Isinya mana, kek manaaa");
+                }
+
+                foreach (var task in tasks)
+                {
+                    tasksFix.Add(new
+                    {
+                        task.judul,
+                        task.username,
+                        task.deskripsi,
+                        task.tanggalMulai,
+                        task.tanggalSelesai,
+                        jenisTugas = task.jenisTugas.ToString(),
+                        namaPrioritas = task.namaPrioritas.ToString(),
+                        taskState = task.taskState.ToString()
+                    });
+                }
+                return Ok(tasksFix);
+            }
+            catch (FileNotFoundException ex)
             {
-                judul = "Task 3",
-                username = "User3",
-                deskripsi = "This is task 3",
-                tanggalMulai = DateTime.Now,
-                tanggalSelesai = DateTime.Now.AddDays(4),
-                jenisTugas = CRUDTaskLibrary.Task.JenisTugas.Project,
-                namaPrioritas = CRUDTaskLibrary.Task.Prioritas.Low,
-                taskState = TaskState.ToDo
-            });
+                return NotFound("file ga ada nih : " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, " errornya : " + ex.Message);
+            }
         }
 
         [HttpPost(Name = "Create/Add Account")]
-        public IActionResult Create(AuthenticationLibrary.Account account)
+        public IActionResult CreateAccount(AuthenticationLibrary.Account account)
         {
             listAccount.Add(account);
             return Ok();
         }
 
         [HttpPost(Name = "Create/Add Task")]
-        public IActionResult Create(CRUDTaskLibrary.Task task)
+        public IActionResult CreateTask(CRUDTaskLibrary.Task task)
         {
             listTask.Add(task);
             return Ok();
         }
-
+        
         [HttpPut(Name = "Update Account Name")]
         public IActionResult UpdateUsername(string username, string newName)
         {
@@ -94,99 +101,145 @@ namespace MyTaskController.Controllers
             }
             return NotFound();
         }
-
+        
         [HttpGet("task/detail/{username}/{judul}")]
         public ActionResult<object> GetTask(string username, string judul)
         {
-            foreach (var account in listAccount)
+            string path = judul + "_" + username + ".json";
+            if (!System.IO.File.Exists(path))
             {
-                if (account.userName == username)
+                return NotFound("File tidak ada");
+            }
+
+            try
+            {
+                var json = System.IO.File.ReadAllText(path);
+                var listTask = JsonConvert.DeserializeObject<List<CRUDTaskLibrary.Task>>(json);
+
+                if (listTask == null)
                 {
-                    account.nama = newName;
-                    return Ok();
+                    return NotFound("No tasks found");
                 }
-            }
-            return NotFound();
-        }
 
-        [HttpPut(Name = "Update Account Password")]
-        public IActionResult UpdatPassworde(string username, string newPassword)
-        {
-            foreach (var account in listAccount)
-            {
-                if (account.userName == username)
+                var task = listTask.FirstOrDefault(t => t.username == username && t.judul == judul);
+
+                if (task == null)
                 {
-                    account.password = newPassword;
-                    return Ok();
+                    return NotFound();
                 }
+
+                var tasksFix = new
+                {
+                    task.judul,
+                    task.username,
+                    task.deskripsi,
+                    task.tanggalMulai,
+                    task.tanggalSelesai,
+                    jenisTugas = task.jenisTugas.ToString(),
+                    namaPrioritas = task.namaPrioritas.ToString(),
+                    taskState = task.taskState.ToString()
+                };
+
+                return Ok(tasksFix);
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                return StatusCode(500, " errornya : " + ex.Message);
+            }
         }
 
-
-        // GET: api/API
-        [HttpGet]
-        public ActionResult<IEnumerable<CRUDTaskLibrary.Task>> GetTasks()
+        [HttpGet("account/{username}/{password}")]
+        public ActionResult<AuthenticationLibrary.Account> GetAccount(string username, string password)
         {
-            var tasksFix = listTask.Select(task => new
+            try
             {
-                task.judul,
-                task.username,
-                task.deskripsi,
-                task.tanggalMulai,
-                task.tanggalSelesai,
-                jenisTugas = task.jenisTugas.ToString(),
-                namaPrioritas = task.namaPrioritas.ToString(),
-                taskState = task.taskState.ToString()
-            });
+                string content = System.IO.File.ReadAllText("Account.json");
+                var accounts = JsonConvert.DeserializeObject<List<AuthenticationLibrary.Account>>(content);
 
-            return Ok(tasksFix);
+                if (accounts == null)
+                {
+                    return NotFound("No accounts found");
+                }
+
+                AuthenticationLibrary.Account account = null;
+                foreach (var fAccount in accounts)
+                {
+                    if (fAccount.userName == username && fAccount.password == password)
+                    {
+                        account = fAccount;
+                        break;
+                    }
+                }
+
+                if (account == null)
+                {
+                    return NotFound("Account not found");
+                }
+
+                return Ok(account);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound("File tidak ada : " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ada error : " + ex.Message);
+            }
         }
 
-        // GET using username and judul
-        [HttpGet("{username}/{judul}")]
-        public ActionResult<object> GetTask(string username, string judul)
+        [HttpDelete("{username}/{judul}")]
+        public IActionResult DeleteTask(string username, string judul)
         {
-            var task = listTask.FirstOrDefault(t =>
-                    string.Equals(t.username, username, StringComparison.OrdinalIgnoreCase) &&
-                    t.judul == judul 
-                );
-
-            if (task == null)
+            string path = judul + "_" + username + ".json";
+            if (!System.IO.File.Exists(path))
             {
-                return NotFound();
+                return NotFound("File jangan ngarang");
             }
 
-            var tasksFix = new
+            try
             {
-                task.judul,
-                task.username,
-                task.deskripsi,
-                task.tanggalMulai,
-                task.tanggalSelesai,
-                jenisTugas = task.jenisTugas.ToString(),
-                namaPrioritas = task.namaPrioritas.ToString(),
-                taskState = task.taskState.ToString()
-            };
-
-            return Ok(tasksFix);
+                System.IO.File.Delete(path);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred: " + ex.Message);
+            }
         }
 
-        // DELETE: api/API/5
-        [HttpDelete("{judul}")]
-        public IActionResult DeleteTask(string judul)
+        [HttpDelete("account/{username}/{password}")]
+        public IActionResult DeleteAccount(string username, string password)
         {
-            
-            var task = listTask.FirstOrDefault(t => string.Equals(t.judul, judul, StringComparison.OrdinalIgnoreCase));
-
-            if (task == null)
+            try
             {
-                return NotFound();
+                string content = System.IO.File.ReadAllText("Account.json");
+                var accounts = JsonConvert.DeserializeObject<List<AuthenticationLibrary.Account>>(content);
+
+                if (accounts == null)
+                {
+                    return NotFound("No accounts found");
+                }
+
+                var account = accounts.FirstOrDefault(a => a.userName == username && a.password == password);
+
+                if (account == null)
+                {
+                    return NotFound("Account not found");
+                }
+                accounts.Remove(account);
+                System.IO.File.WriteAllText("Account.json", JsonConvert.SerializeObject(accounts));
+
+                return NoContent();
             }
-
-            listTask.Remove(task);
-
-            return NoContent();
+            catch (FileNotFoundException ex)
+            {
+                return NotFound("file ga ada ngab : " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ada error di : " + ex.Message);
+            }
         }
     }
 }
