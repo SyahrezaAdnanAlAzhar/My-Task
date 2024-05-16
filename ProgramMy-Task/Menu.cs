@@ -72,22 +72,79 @@ namespace ProgramMy_Task
 
                         break;
                     case 6:
+                        Console.Write("Masukkan Judul Tugas Lama: ");
+                        string judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        string username = Console.ReadLine();
+                        Console.Write("Masukkan Judul Baru: ");
+                        string judulBaru = Console.ReadLine();
 
+                        CRUDTask.updateJudul(judulLama, judulBaru, username);
                         break;
                     case 7:
+                        Console.Write("Masukkan Judul Tugas: ");
+                        judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        username = Console.ReadLine();
+                        Console.Write("Masukkan Deskripsi Baru: ");
+                        string deskripsiBaru = Console.ReadLine();
 
+                        CRUDTask.updateDeskripsi(judulLama, deskripsiBaru, username);
                         break;
                     case 8:
+                        Console.Write("Masukkan Judul Tugas: ");
+                        judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        username = Console.ReadLine();
+                        Console.Write("Masukkan Tanggal Mulai Baru (YYYY-MM-DD): ");
+                        string tanggalMulaiBaru = Console.ReadLine();
 
+                        CRUDTask.updateTanggalMulai(judulLama, DateTime.Parse(tanggalMulaiBaru), username);
                         break;
                     case 9:
+                        Console.Write("Masukkan Judul Tugas: ");
+                        judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        username = Console.ReadLine();
+                        Console.Write("Masukkan Tanggal Selesai Baru (YYYY-MM-DD): ");
+                        string tanggalSelesaiBaru = Console.ReadLine();
 
+                        CRUDTask.updateTanggalSelesai(judulLama, DateTime.Parse(tanggalSelesaiBaru), username);
                         break;
                     case 10:
+                        Console.Write("Masukkan Judul Tugas: ");
+                        judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        username = Console.ReadLine();
+                        Console.WriteLine("1. Video");
+                        Console.WriteLine("2. Laporan");
+                        Console.WriteLine("3. Project");
+                        Console.WriteLine("4. Desain");
+                        Console.WriteLine("5. Proposal");
+                        Console.WriteLine("6. Slide Presentasi");
+                        Console.WriteLine("7. Observasi");
+                        Console.WriteLine("8. Quiz");
+                        Console.WriteLine("9. Forum Diskusi");
+                        Console.Write("Masukkan Nomor Pilihan Jenis Tugas: ");
 
+                        int nomorJenisTugas = int.Parse(Console.ReadLine());
+
+                        CRUDTask.updateJenisTugas(judulLama, nomorJenisTugas, username);
                         break;
                     case 11:
+                        Console.Write("Masukkan Judul Tugas: ");
+                        judulLama = Console.ReadLine();
+                        Console.Write("Masukkan Username: ");
+                        username = Console.ReadLine();
+                        Console.WriteLine("1. Highest");
+                        Console.WriteLine("2. High");
+                        Console.WriteLine("3. Medium");
+                        Console.WriteLine("4. Low");
+                        Console.WriteLine("5. Lowest");
 
+                        int nomorPrioritas = int.Parse(Console.ReadLine());
+
+                        CRUDTask.updatePrioritas(judulLama, nomorPrioritas, username);
                         break;
                 }
             }
