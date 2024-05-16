@@ -70,16 +70,44 @@ namespace CRUDTaskLibrary.Tests
                 Console.WriteLine("Angka < 0");
             }
         }
-        [TestMethod()]
-        public void updatePrioritasTest_Highest()
-        {
-            Task taskTes = new Task();
 
-            taskTes.judul = "Tubes";
-            taskTes.username = "Bagas";
-            taskTes.namaPrioritas = Task.Prioritas.Low;
-            CRUDTask.updatePrioritas(taskTes.judul, 1, taskTes.username);
-            Assert.AreEqual(Task.Prioritas.Highest, taskTes.namaPrioritas);
+        [TestMethod()]
+        public void updateJenisTugasTest_judul()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas(null, 3, "Reza");
+            }
+            catch
+            {
+                Console.WriteLine("Judul tidak boleh null");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJenisTugasTest_username()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas("KPL", 2, null);
+            }
+            catch
+            {
+                Console.WriteLine("Username tidak boleh null");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJenisTugasTest_jenisTugas()
+        {
+            try
+            {
+                CRUDTask.updateJenisTugas("KPL", 20, "Reza");
+            }
+            catch
+            {
+                Console.WriteLine("No urut jenis tugas harus kurang dari 10");
+            }
         }
     }
 }

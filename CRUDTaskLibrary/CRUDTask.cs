@@ -1,12 +1,28 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text.Json;
+using FluentValidation;
+using FluentValidation.Results;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace CRUDTaskLibrary
 {
     public static class CRUDTask
     {
+        public static Task getTaskInput(TaskValidator validator)
+        {
+            Task inputTask = new Task();
+            ValidationResult validationResult;
+
+            Console.WriteLine("Masukkan data tugas");
+            Console.Write("Judul: ");
+            inputTask.judul = Console.ReadLine();
+            do
+            {
+
+            } while (!validationResult.IsValid);
+            return null;
+        }
         public static void createTask(Task taskInput)
         {
             string jsonText = JsonSerializer.Serialize(taskInput);
@@ -27,25 +43,76 @@ namespace CRUDTaskLibrary
             else
             {
                 return null;
+                //test
             }
         }
-        public static void deleteTask<T, U>(T judulTask, U username)
+        public static void deleteTask(string judulTask, string username)
         {
             //delete file json
         }
-        public static void updateJudul<T, U, V>(T judulAwalTask, U judulPerubahanTask, V username)
+        public static void updateJudul(String judulAwalTask, String judulPerubahanTask, String username)
         {
-            //merubah judul pada file json
+            // Ensure the task is found
+            if (judulAwalTask == null || username == null)
+            {
+                 throw new Exception($"Task with title '{judulAwalTask}' and '{username}' not found.");
+             }
+
+            Task taskData = readTask(judulAwalTask, username);
+            // Update the task title
+            taskData.judul = judulPerubahanTask;
+            
+            createTask(taskData);
+
+            Console.WriteLine("Judul Berhasil Diperbarui");
         }
-        public static void updateDeskripsi<T, U, V>(T judulTask, U perubahanDeskripsi, V username)
+        public static void updateDeskripsi(string judulTask, string deskripsiBaru, string username)
         {
-            //merubah deskrispi pada file json
+            if (judulTask == null || username == null)
+            {
+                throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+            }
+
+            Task desTask = readTask(judulTask, username);
+
+            desTask.deskripsi = deskripsiBaru;
+
+           /* TaskValidator validator = new TaskValidator();
+            ValidationResult validationResult = validator.Validate(desTask);
+
+            if (!validationResult.IsValid)
+            {
+                throw new Exception("Invalid task data");
+            }*/
+
+            createTask(desTask);
+
+            Console.WriteLine("Deskripsi Berhasil Diperbarui");
         }
-        public static void updateTanggalMulai<T, U, V>(T judulTask, U perubahanTanggalMulai, V username)
+        public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
-            //merubah tanggal mulai pada file json
-            //pastikan perubahan tanggal mulai yaitu pada tanggal sebelum tanggalSelesai
-            //Pastikan statenya ikut menyesuaikan
+         if (judulTask == null || username == null)
+         {
+             throw new ArgumentNullException("Judul atau Username tidak boleh null.");
+         }
+
+         Task desTask = readTask(judulTask, username);
+
+         // Programming Defensive: Memastikan perubahanTanggalMulai adalah objek DateTime yang valid
+         if (!(perubahanTanggalMulai is DateTime))
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus berupa objek DateTime.");
+         }
+
+         if (perubahanTanggalMulai.CompareTo(desTask.tanggalMulai) < 0)
+         {
+             throw new ArgumentException("Tanggal Mulai Baru harus lebih dari tanggal mulai");
+         }
+
+         desTask.tanggalMulai = perubahanTanggalMulai;
+
+         createTask(desTask);
+         Console.WriteLine("Tanggal mulai sudah menjadi: " + perubahanTanggalMulai);
         }
         public static void updateTanggalSelesai(string judulTask, DateTime perubahanTanggalSelesai, string username)
         {
@@ -74,9 +141,7 @@ namespace CRUDTaskLibrary
 
             desTask.tanggalSelesai = perubahanTanggalSelesai;
 
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
-
-            createTask<string>(serTask);
+            createTask(desTask);
             Console.WriteLine("Tanggal selesai sudah menjadi: " + perubahanTanggalSelesai);
         }
         public static void updateJenisTugas(string judulTask, int perubahanJenisTugas, string username)
@@ -124,9 +189,8 @@ namespace CRUDTaskLibrary
             {
                 desTask.jenisTugas = Task.JenisTugas.ForumDiskusi;
             }
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
 
-            createTask<string>(serTask);
+            createTask(desTask);
             //Bisa pake JArray kalo gabisa buat 1-1
 
             Console.WriteLine("Jenis Tugas Terdupdate menjadi Tipe: " + Task.getKodeJenisTugas(desTask.jenisTugas));
@@ -168,9 +232,7 @@ namespace CRUDTaskLibrary
                 desTask.namaPrioritas = Task.Prioritas.Lowest;
             }
 
-            string serTask = JsonConvert.SerializeObject(desTask, Formatting.Indented);
-
-            createTask<string>(serTask);
+            createTask(desTask);
 
             Console.WriteLine("Tignkat Prioritas Tugas Sekarang Bernilai: " + Task.getUrutanPrioritas(desTask.namaPrioritas));
         }

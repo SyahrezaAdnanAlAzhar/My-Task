@@ -1,0 +1,38 @@
+[
+  {
+    "userName": "Nicholas",
+    "nama": "Nicholas Xavier Robinson Silalahi",
+    "email": "Nicho@gmail.com",
+    "password": "password1"
+  },
+  {
+    "userName": "Syauqi",
+    "nama": "Syauqi Dhiya Ulhaq",
+    "email": "Syauqi@gmail.com",
+    "password": "password2"
+  },
+  {
+    "userName": "Akbar",
+    "nama": "Ahmad Fadli Akbar",
+    "email": "Akbar@gmail.com",
+    "password": "password3"
+  },
+  {
+    "userName": "Reza",
+    "nama": "Syahreza Adnan Al-Azhar",
+    "email": "Reza@gmail.com",
+    "password": "password4"
+  },
+  {
+    "userName": "Ricky",
+    "nama": "Ricky Renaldi",
+    "email": "Ricky@gmail.com",
+    "password": "password5"
+  },
+  {
+    "userName": "Arvin",
+    "nama": "Benedict Arvin Indra",
+    "email": "Arvin@gmail.com",
+    "password": "password6"
+  }
+]

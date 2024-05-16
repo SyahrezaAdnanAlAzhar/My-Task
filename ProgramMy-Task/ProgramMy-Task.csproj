@@ -13,4 +13,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AuthenticationLibrary\AuthenticationLibrary.csproj" />
+    <ProjectReference Include="..\CRUDTaskLibraryTests\CRUDTaskLibraryTests.csproj" />
+    <ProjectReference Include="..\CRUDTaskLibrary\CRUDTaskLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
