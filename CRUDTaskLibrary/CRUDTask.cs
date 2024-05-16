@@ -34,34 +34,70 @@ namespace CRUDTaskLibrary
         {
             //delete file json
         }
-        public static void updateJudul(String judulAwalTask, String judulPerubahanTask, String username)
-        {
-             var taskData = System.Text.Json.JsonSerializer.Deserialize<List<Task>>(File.ReadAllText("task_data.json"));
+         public static void updateJenisTugas<T, U, V>(T judulTask, U perubahanJenisTugas, V username)
+ {
+     //merubah tanggal mulai pada file json
+     //pastikan bahwa jenis tugas yang ingin dirubah terdapat di enum
+     //Kalo perlu lokasi: string path = @"JSON\tasks.json";
 
-             // Find the task with the matching title
-             var task = taskData.Find(t => t.judul == judulAwalTask);
+     // Design By Contract: Memastikan judulTask dan username tidak null
+     if (judulTask == null || username == null)
+     {
+         throw new ArgumentNullException("Judul Task atau Username tidak boleh null.");
+     }
 
-             // Ensure the task is found
-             if (task == null)
-            {
-                 throw new Exception($"Task with title '{judulAwalTask}' not found.");
-             }
+     // Programming Defensive: Memastikan perubahanJenisTugas adalah angka integer antara 1 dan 9
+     dynamic dynamicJenisTugas = perubahanJenisTugas;
+     if (!(dynamicJenisTugas is int) || dynamicJenisTugas < 1 || dynamicJenisTugas > 9)
+     {
+         throw new ArgumentException("perubahanJenisTugas harus berupa angka antara 1 dan 9.");
+     }
+     Task desTask = readTask(judulTask, username);
 
-             // Update the task title
-             task.judul = judulPerubahanTask;
+     createTask(desTask);
 
-             // Record the change
-             var changeLog = new ChangeLog
-            {
-                 Username = username.ToString(),
-                 Message = $"Task title '{task.judul}' updated from '{judulAwalTask}' to '{judulPerubahanTask}'."
-             };
+     if (perubahanJenisTugas.Equals(1))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Video;
+     }
+     else if (perubahanJenisTugas.Equals(2))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Laporan;
+     }
+     else if (perubahanJenisTugas.Equals(3))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Project;
+     }
+     else if (perubahanJenisTugas.Equals(4))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Desain;
+     }
+     else if (perubahanJenisTugas.Equals(5))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Proposal;
+     }
+     else if (perubahanJenisTugas.Equals(6))
+     {
+         desTask.jenisTugas = Task.JenisTugas.SlidePresentasi;
+     }
+     else if (perubahanJenisTugas.Equals(7))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Observasi;
+     }
+     else if (perubahanJenisTugas.Equals(8))
+     {
+         desTask.jenisTugas = Task.JenisTugas.Quiz;
+     }
+     else if (perubahanJenisTugas.Equals(9))
+     {
+         desTask.jenisTugas = Task.JenisTugas.ForumDiskusi;
+     }
+     createTask(desTask);
+     //Bisa pake JArray kalo gabisa buat 1-1
 
-             taskData.Add(changeLog);
+     Console.WriteLine("Jenis Tugas Terdupdate menjadi Tipe: " + Task.getKodeJenisTugas(desTask.jenisTugas));
 
-             // Save the data back to the JSON file
-             File.WriteAllText("task_data.json", System.Text.Json.JsonSerializer.Serialize(taskData));
-        }
+ }
         public static void updateTanggalMulai(string judulTask, DateTime perubahanTanggalMulai, string username)
         {
          if (judulTask == null || username == null)
