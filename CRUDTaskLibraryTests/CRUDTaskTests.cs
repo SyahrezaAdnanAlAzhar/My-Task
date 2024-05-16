@@ -70,5 +70,31 @@ namespace CRUDTaskLibrary.Tests
                 Console.WriteLine("Angka < 0");
             }
         }
+
+        [TestMethod()]
+        public void updateJudul_judul()
+        {
+            try
+            {
+                CRUDTask.updateJudul(null, "Judul Baru", "Ricky");
+            }
+            catch (Exception ex)
+            {
+        Console.WriteLine("Judul null");
+            }
+        }
+
+        [TestMethod()]
+        public void updateJudul_username()
+        {
+            try
+            {
+                CRUDTask.updateJudul("Tubes", "Judul Baru", null);
+            }
+        catch (Exception ex)
+            {
+                Console.WriteLine("Username null");
+            }
+        }
     }
 }
