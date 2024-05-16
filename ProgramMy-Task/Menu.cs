@@ -178,24 +178,24 @@ namespace ProgramMy_Task
             return newAccount;
         }
 
-        //private Account getInputAccountData()
-        //{
-        //    Account newAccount = new Account();
-        //    Console.Write("Username: ");
-        //    newAccount.userName = Console.ReadLine();
-        //    while (!Authentication.FindAccount(newAccount.userName).Equals(null))
-        //    {
-        //        Console.WriteLine("Username sudah digunakan, buat username yang unik!");
-        //        Console.Write("Username: ");
-        //        newAccount.userName = Console.ReadLine();
-        //    }
-        //    Console.Write("Nama: ");
-        //    newAccount.nama = Console.ReadLine();
-        //    Console.Write("Email: ");
-        //    newAccount.email = Console.ReadLine();
-        //    Console.Write("Password: ");
-        //    newAccount.password = Console.ReadLine();
-        //    return newAccount;
-        //}
+        private Account getInputAccountData()
+        {
+            Account newAccount = new Account();
+            Console.Write("Username: ");
+            newAccount.userName = Console.ReadLine();
+            while (!Authentication.FindAccount(newAccount.userName).Equals(null))
+            {
+                Console.WriteLine("Username sudah digunakan, buat username yang unik!");
+                Console.Write("Username: ");
+                newAccount.userName = Console.ReadLine();
+            }
+            Console.Write("Nama: ");
+            newAccount.nama = Console.ReadLine();
+            Console.Write("Email: ");
+            newAccount.email = Console.ReadLine();
+            Console.Write("Password: ");
+            newAccount.password = Console.ReadLine();
+            return newAccount;
+        }
     }
 }

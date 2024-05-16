@@ -58,64 +58,64 @@ namespace AuthenticationLibrary
         }
         
 
-        public static Authentication(string path)
-        {
-            _path = path;
-        }
+        //public static Authentication(string path)
+        //{
+        //    _path = path;
+        //}
 
-        public static void signUpAccount(string userName, string nama, string email, string password)
-        {
-            Account account = new Account();
-            account.userName = userName;
-            account.nama = nama;
-            account.email = email;
-            account.password = password;
-            account.state = AccountState.SignedOut;
+        //public static void signUpAccount(string userName, string nama, string email, string password)
+        //{
+        //    Account account = new Account();
+        //    account.userName = userName;
+        //    account.nama = nama;
+        //    account.email = email;
+        //    account.password = password;
+        //    account.state = AccountState.SignedOut;
 
-            if (!IsUsernameUnique(akun.userName))
-            {
-                throw new Exception("Username sudah digunakan.");
-            }
+        //    if (!IsUsernameUnique(akun.userName))
+        //    {
+        //        throw new Exception("Username sudah digunakan.");
+        //    }
 
-            var accounts = GetAllAccounts();
-            accounts.Add(akun);
-            SaveAccounts(accounts);
-        }
+        //    var accounts = GetAllAccounts();
+        //    accounts.Add(akun);
+        //    SaveAccounts(accounts);
+        //}
 
-        public static Account signInAccount(string username, string password)
-        {
-            var account = GetAllAccounts().FirstOrDefault(a => a.userName == username && a.password == password);
-            return account;
-        }
+        //public static Account signInAccount(string username, string password)
+        //{
+        //    var account = GetAllAccounts().FirstOrDefault(a => a.userName == username && a.password == password);
+        //    return account;
+        //}
 
-        public static Account signOutAccount(string username, string password)
-        {
-            // Implementasi signOutAccount sesuai kebutuhan aplikasi
-            return null;
-        }
+        //public static Account signOutAccount(string username, string password)
+        //{
+        //    // Implementasi signOutAccount sesuai kebutuhan aplikasi
+        //    return null;
+        //}
 
-        private List<Account> GetAllAccounts()
-        {
-            if (!File.Exists(_path))
-            {
-                File.WriteAllText(_path, "[]");
-            }
+        //private List<Account> GetAllAccounts()
+        //{
+        //    if (!File.Exists(_path))
+        //    {
+        //        File.WriteAllText(_path, "[]");
+        //    }
 
-            var json = File.ReadAllText(_path);
-            var accounts = JsonConvert.DeserializeObject<List<Account>>(json);
-            return accounts ?? new List<Account>();
-        }
+        //    var json = File.ReadAllText(_path);
+        //    var accounts = JsonConvert.DeserializeObject<List<Account>>(json);
+        //    return accounts ?? new List<Account>();
+        //}
 
-        private static void SaveAccounts(List<Account> accounts)
-        {
-            var json = JsonConvert.SerializeObject(accounts);
-            File.WriteAllText(_path, json);
-        }
+        //private static void SaveAccounts(List<Account> accounts)
+        //{
+        //    var json = JsonConvert.SerializeObject(accounts);
+        //    File.WriteAllText(_path, json);
+        //}
 
-        private static bool IsUsernameUnique(string username)
-        {
-            var accounts = GetAllAccounts();
-            return !accounts.Any(a => a.userName == username);
-        }
+        //private static bool IsUsernameUnique(string username)
+        //{
+        //    var accounts = GetAllAccounts();
+        //    return !accounts.Any(a => a.userName == username);
+        //}
     }
 }
