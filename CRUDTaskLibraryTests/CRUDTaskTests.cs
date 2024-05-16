@@ -80,7 +80,7 @@ namespace CRUDTaskLibrary.Tests
             }
             catch (Exception ex)
             {
-        Console.WriteLine("Judul null");
+                Console.WriteLine("Judul null");
             }
         }
 
@@ -91,7 +91,7 @@ namespace CRUDTaskLibrary.Tests
             {
                 CRUDTask.updateJudul("Tubes", "Judul Baru", null);
             }
-        catch (Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Username null");
             }
