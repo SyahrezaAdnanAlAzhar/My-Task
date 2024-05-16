@@ -67,6 +67,20 @@ namespace MyTaskController.Controllers
             return Ok();
         }
 
+        [HttpPost(Name = "Create/Add Account")]
+        public IActionResult Create(AuthenticationLibrary.Account account)
+        {
+            listAccount.Add(account);
+            return Ok();
+        }
+
+        [HttpPost(Name = "Create/Add Task")]
+        public IActionResult Create(CRUDTaskLibrary.Task task)
+        {
+            listTask.Add(task);
+            return Ok();
+        }
+
         [HttpPut(Name = "Update Account Name")]
         public IActionResult UpdateUsername(string username, string newName)
         {
@@ -94,8 +108,34 @@ namespace MyTaskController.Controllers
             }
             return NotFound();
         }
-<<<<<<< HEAD
-=======
+
+        [HttpGet("task/detail/{username}/{judul}")]
+        public ActionResult<object> GetTask(string username, string judul)
+        {
+            foreach (var account in listAccount)
+            {
+                if (account.userName == username)
+                {
+                    account.nama = newName;
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPut(Name = "Update Account Password")]
+        public IActionResult UpdatPassworde(string username, string newPassword)
+        {
+            foreach (var account in listAccount)
+            {
+                if (account.userName == username)
+                {
+                    account.password = newPassword;
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
 
 
         // GET: api/API
@@ -162,6 +202,5 @@ namespace MyTaskController.Controllers
 
             return NoContent();
         }
->>>>>>> 348455e1d7973dd734f626633ab2cde04739e484
     }
 }
