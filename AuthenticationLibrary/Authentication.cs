@@ -10,16 +10,17 @@ namespace AuthenticationLibrary
 {
     public static class Authentication
     {
+
         private string _path;
-
-
-
+        String Authentication = "Users/ahmadfadliakbar/Projects/My-Task/AuthenticationLibrary/Authentication.json";
+        Authentication auth = new Authentication(Authentication.json);
+        
         private static bool usernameSudahAda(string username, string path)
         {
             try
             {
                 string jsonData = File.ReadAllText(path);
-                Account akun = Newtonsoft.Json.JsonSerializer.Deserialize<Account>(jsonData);
+                Account akun = JsonSerializer.Deserialize<Account>(jsonData);
                 if (akun != null && akun.email == username)
                 {
                     //username sudah ada
@@ -36,6 +37,8 @@ namespace AuthenticationLibrary
                 return false;
             }
         }
+
+
 
         public static Account getInputAccountData(AccountValidator validator)
         {
