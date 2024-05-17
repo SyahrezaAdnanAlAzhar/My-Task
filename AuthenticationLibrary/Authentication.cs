@@ -12,29 +12,7 @@ namespace AuthenticationLibrary
     {
         private string _path;
 
-        //public static Account FindAccount(string userName)
-        //{
-        //    string filePath = $"{userName}.json";
-        //    if (File.Exists(filePath))
-        //    {
-        //        try
-        //        {
-        //            string jsonString = File.ReadAllText(filePath);
-        //            Account account = JsonSerializer.Deserialize<Account>(jsonString);
-        //            return account;
-        //        }
-        //        catch (JsonException e)
-        //        {
-        //            Console.WriteLine($"Error deserializing JSON: {e.Message}");
-        //            return null;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"{userName} not found.");
-        //        return null;
-        //    }
-        //}
+
 
         private static bool usernameSudahAda(string username, string path)
         {
