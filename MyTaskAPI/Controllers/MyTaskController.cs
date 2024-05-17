@@ -1,25 +1,87 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using AuthenticationLibrary;
 using CRUDTaskLibrary;
-using System.Threading.Tasks;
-using System.IO;
 using Newtonsoft.Json;
-using System.Linq;
-using System;
-using FluentValidation;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
+using Task = CRUDTaskLibrary.Task;
 
 
 namespace MyTaskController.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class APIController : ControllerBase
     {
-        private static readonly List<AuthenticationLibrary.Account> listAccount = new List<AuthenticationLibrary.Account>();
-        private static readonly List<CRUDTaskLibrary.Task> listTask = new List<CRUDTaskLibrary.Task>();
-        
+        private static List<AuthenticationLibrary.Account> listAccount;
+        private static List<CRUDTaskLibrary.Task> listTask;
+
+        // Constructor APIController untuk membaca file json yang disimpan di listAccount dan listTask
+        public APIController()
+        {
+            listAccount = LoadAccountsFromJson("Account.json");
+            listTask = LoadTasksFromJson("main.json");
+        }
+
+        // function untuk membaca file json untuk inisiasi listAccount
+        private List<AuthenticationLibrary.Account> LoadAccountsFromJson(string jsonFileName)
+        {
+            List<AuthenticationLibrary.Account> accounts = new List<AuthenticationLibrary.Account>();
+            string jsonString = System.IO.File.ReadAllText(jsonFileName);
+            accounts = JsonConvert.DeserializeObject<List<AuthenticationLibrary.Account>>(jsonString);
+            return accounts;
+        }
+
+        // function untuk membaca file json untuk inisiasi listTask
+        private List<CRUDTaskLibrary.Task> LoadTasksFromJson(string jsonFileName)
+        {
+            List<CRUDTaskLibrary.Task> tasks = new List<CRUDTaskLibrary.Task>();
+            string jsonString = System.IO.File.ReadAllText(jsonFileName);
+            tasks = JsonConvert.DeserializeObject<List<CRUDTaskLibrary.Task>>(jsonString);
+            return tasks;
+        }
+
+
+        // Create Account dengan menerima object account, kemudian ditambahkan pada json
+        [HttpPost]
+        [Route("CreateAccount")]
+        public ActionResult CreateAccount(AuthenticationLibrary.Account accountInput)
+        {
+            AccountValidator validator = new AccountValidator();
+            ValidationResult validationResult = validator.Validate(accountInput);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest("Data Account yang dimasukkan tidak valid");
+            }
+
+            listAccount.Add(accountInput);
+
+            string jsonContent = JsonConvert.SerializeObject(listAccount, Formatting.Indented);
+            System.IO.File.WriteAllText("Account.json", jsonContent);
+
+            return Ok($"Account dengan username {accountInput.userName} telah ditambahkan");
+        }
+
+        // Create Task dengan menerima object task, kemudian ditambahkan pada json
+        [HttpPost]
+        [Route("CreateTask")]
+        public ActionResult CreateTask(CRUDTaskLibrary.Task taskInput)
+        {
+            TaskValidator validator = new TaskValidator();
+            ValidationResult validatorResult = validator.Validate(taskInput);
+
+            if (!validatorResult.IsValid)
+            {
+                return BadRequest("Data Task yang dimasukkan tidak valid");
+            }
+
+            listTask.Add(taskInput);
+
+            string jsonContent = JsonConvert.SerializeObject(listTask, Formatting.Indented);
+            System.IO.File.WriteAllText("main.json", jsonContent);
+            return Ok($"Task dengan judul {taskInput.judul} milik {taskInput.username} telah ditambahkan");
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<CRUDTaskLibrary.Task>> GetTasks()
         {
@@ -58,48 +120,6 @@ namespace MyTaskController.Controllers
             {
                 return StatusCode(500, " errornya : " + ex.Message);
             }
-        }
-
-        [HttpPost(Name = "Create/Add Account")]
-        public IActionResult CreateAccount(AuthenticationLibrary.Account account)
-        {
-            listAccount.Add(account);
-            return Ok();
-        }
-
-        [HttpPost(Name = "Create/Add Task")]
-        public IActionResult CreateTask(CRUDTaskLibrary.Task task)
-        {
-            listTask.Add(task);
-            return Ok();
-        }
-        
-        [HttpPut(Name = "Update Account Name")]
-        public IActionResult UpdateUsername(string username, string newName)
-        {
-            foreach (var account in listAccount)
-            {
-                if (account.userName == username)
-                {
-                    account.nama = newName;
-                    return Ok();
-                }
-            }
-            return NotFound();
-        }
-
-        [HttpPut(Name = "Update Account Password")]
-        public IActionResult UpdatPassworde(string username, string newPassword)
-        {
-            foreach (var account in listAccount)
-            {
-                if (account.userName == username)
-                {
-                    account.password = newPassword;
-                    return Ok();
-                }
-            }
-            return NotFound();
         }
         
         [HttpGet("task/detail/{username}/{judul}")]
@@ -188,6 +208,35 @@ namespace MyTaskController.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("Update Task Deskripsi")]
+        public ActionResult UpdateTaskDeskripsi(string username, string judulTask, string password, string newDeskripsi)
+        {
+            foreach (Account A in listAccount)
+            {
+                if (A.userName.Equals(username) && A.password.Equals(password))
+                {
+                    foreach (Task T in listTask)
+                    {
+                        if (T.username.Equals(username) && T.judul.Equals(judulTask))
+                        {
+                            T.deskripsi = newDeskripsi;
+                            string jsonContent = JsonConvert.SerializeObject(listTask, Formatting.Indented);
+                            System.IO.File.WriteAllText("main.json", jsonContent);
+                            return Ok($"Deskripsi dari task {judulTask} milik {username} berhasil dirubah");
+                        }
+                    }
+                    return BadRequest($"Task {judulTask} tidak ditemukan");
+                }
+                else if (A.userName.Equals(username) && !A.password.Equals(password))
+                {
+                    return BadRequest("Password yang anda masukkan salah");
+                }
+            }
+            return BadRequest($"Username {username} tidak ditemukan");
+        }
+
+
         [HttpDelete("{username}/{judul}")]
         public IActionResult DeleteTask(string username, string judul)
         {
@@ -241,5 +290,15 @@ namespace MyTaskController.Controllers
                 return StatusCode(500, "Ada error di : " + ex.Message);
             }
         }
+
+        public IActionResult GetById<T>(int id, T listObject) where T : List<object>
+        {
+            if ( id < 0 || id >= listObject.Count)
+            {
+                return NotFound();
+            }
+            return Ok(listObject[id]);
+        }
+
     }
 }
